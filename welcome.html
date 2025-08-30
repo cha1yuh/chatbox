@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wyrdbox Welcome</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Welcome to Wyrdbox</h1>
+
+  <button onclick="window.location.href='login.html'">Sign Up / Login</button>
+  <button onclick="continueAnonymous()">Continue as Anonymous</button>
+
+  <script>
+    function continueAnonymous() {
+      sessionStorage.setItem('anonymous', 'true');
+      sessionStorage.setItem('nickname', 'Anonymous'); 
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
