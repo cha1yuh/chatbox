@@ -1,22 +1,44 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Wyrdbox Login</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-</head>
-<body>
-  <h1>Sign Up / Login</h1>
+// Firebase config
+firebase.initializeApp({
+  apiKey: "AIzaSyCqILLxx2JAxstJ9LRIiqgFDWUTvAx4ZVs",
+  authDomain: "chatbox-3c95d.firebaseapp.com",
+  projectId: "chatbox-3c95d",
+  storageBucket: "chatbox-3c95d.firebasestorage.app",
+  messagingSenderId: "385714577506",
+  appId: "1:385714577506:web:9308dc98ed8de92d00713b"
+});
 
-  <h2>Sign Up</h2>
-  <input id="signup-username" placeholder="Choose a username">
-  <button onclick="signup()">Sign Up</button>
+const db = firebase.firestore();
 
-  <h2>Login</h2>
-  <input id="login-username" placeholder="Enter your username">
-  <button onclick="login()">Login</button>
+// Sign Up
+function signup() {
+  const username = document.getElementById('signup-username').value.trim();
+  if(username.toLowerCase() === "anonymous") {
+    alert("You cannot use 'Anonymous' as a username!");
+    return;
+  }
 
-  <script src="login.js"></script>
-</body>
-</html>
+  db.collection('users').doc(username).get().then(doc => {
+    if(doc.exists) {
+      alert("Username already taken!");
+    } else {
+      db.collection('users').doc(username).set({username});
+      sessionStorage.setItem('nickname', username);
+      window.location.href = 'index.html';
+    }
+  });
+}
+
+// Login
+function login() {
+  const username = document.getElementById('login-username').value.trim();
+
+  db.collection('users').doc(username).get().then(doc => {
+    if(doc.exists) {
+      sessionStorage.setItem('nickname', username);
+      window.location.href = 'index.html';
+    } else {
+      alert("Username not found!");
+    }
+  });
+}
