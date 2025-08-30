@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Wyrdbox Welcome</title>
+  <title>Wyrdbox Login</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
-  <h1>Welcome to Wyrdbox</h1>
+  <h1>Sign Up / Login</h1>
 
-  <button onclick="window.location.href='login.html'">Sign Up / Login</button>
-  <button onclick="continueAnonymous()">Continue as Anonymous</button>
+  <h2>Sign Up</h2>
+  <input id="signup-username" placeholder="Choose a username">
+  <button onclick="signup()">Sign Up</button>
 
-  <script>
-    function continueAnonymous() {
-      sessionStorage.setItem('anonymous', 'true');
-      sessionStorage.setItem('nickname', 'Anonymous'); 
-      window.location.href = 'index.html';
-    }
-  </script>
+  <h2>Login</h2>
+  <input id="login-username" placeholder="Enter your username">
+  <button onclick="login()">Login</button>
+
+  <script src="login.js"></script>
 </body>
 </html>
