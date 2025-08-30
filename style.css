@@ -1,41 +1,135 @@
+/* Import Japanese-inspired fonts */
+@import url('https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Kosugi+Maru&display=swap');
+
+/* General Body Styling */
 body {
-  background-color: #000;
-  color: #fff;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Kosugi Maru', sans-serif;
+  background-color: #121212; /* Dark base */
+  
+  /* Koi fish pattern */
+  background-image: 
+    url('data:image/svg+xml;utf8,\
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">\
+<path d="M50,100 C40,90 60,80 50,70 C40,60 60,50 50,40" stroke="rgba(248,240,198,0.1)" fill="none" stroke-width="2"/>\
+<path d="M150,180 C140,170 160,160 150,150 C140,140 160,130 150,120" stroke="rgba(248,240,198,0.1)" fill="none" stroke-width="2"/>\
+</svg>');
+  background-repeat: repeat;
+  background-size: 200px 200px;
+
+  color: #f0f0f0;
   margin: 0;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* Page Titles */
 h1, h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: #f8f0c6; /* Soft gold accent */
+  text-shadow: 1px 1px 2px #000;
 }
 
+/* Chat Title Styling */
+h1.chat-title {
+  font-family: 'Sawarabi Mincho', serif;
+  font-size: 3rem;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+}
+
+/* Chatbox Container */
 #chatbox {
-  border: 1px solid #fff;
-  padding: 10px;
+  border: 2px solid #444;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
   height: 400px;
+  padding: 15px;
   overflow-y: auto;
-  background-color: #111;
-  margin-bottom: 15px;
+  background-color: rgba(20,20,20,0.9);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+  margin-bottom: 20px;
   scroll-behavior: smooth;
 }
 
-input, button {
-  background-color: #222;
-  color: #fff;
-  border: 1px solid #fff;
-  padding: 8px 10px;
+/* Individual Messages */
+#chatbox p {
+  background-color: rgba(34, 34, 34, 0.8);
+  padding: 8px 12px;
+  border-radius: 8px;
   margin: 5px 0;
-  border-radius: 3px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+  font-size: 16px;
 }
 
-button:hover {
-  background-color: #333;
-  cursor: pointer;
-}
-
-#nickname, #message, #signup-username, #login-username {
-  width: calc(100% - 22px);
+/* Input Fields and Buttons */
+input, button {
+  width: 90%;
+  max-width: 600px;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #555;
+  background-color: rgba(34,34,34,0.9);
+  color: #f0f0f0;
+  font-size: 1rem;
+  transition: all 0.3s ease;
   box-sizing: border-box;
+  font-family: 'Kosugi Maru', sans-serif;
+}
+
+/* Input Focus */
+input:focus {
+  outline: none;
+  border-color: #f8f0c6;
+  box-shadow: 0 0 5px #f8f0c6;
+}
+
+/* Buttons */
+button {
+  background: linear-gradient(135deg, #444 0%, #222 100%);
+  border: 1px solid #666;
+  cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #f8f0c6;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+/* Button Hover */
+button:hover {
+  background: linear-gradient(135deg, #555 0%, #333 100%);
+  box-shadow: 0 6px 12px rgba(255, 215, 0, 0.5);
+}
+
+/* Scrollbar Styling */
+#chatbox::-webkit-scrollbar {
+  width: 10px;
+}
+
+#chatbox::-webkit-scrollbar-thumb {
+  background-color: #f8f0c6;
+  border-radius: 10px;
+}
+
+#chatbox::-webkit-scrollbar-thumb:hover {
+  background-color: #ffd700;
+}
+
+/* Welcome page buttons */
+body > button {
+  width: auto;
+  padding: 12px 25px;
+  margin: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Optional: subtle hover glow for inputs */
+input:hover {
+  box-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
 }
