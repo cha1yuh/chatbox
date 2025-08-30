@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Wyrdbox Login</title>
+  <title>Login / Sign Up - Wyrdbox</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+  <script src="login.js"></script>
 </head>
 <body>
-  <h1>Sign Up / Login</h1>
+  <h1>Login / Sign Up</h1>
 
-  <h2>Sign Up</h2>
-  <input id="signup-username" placeholder="Choose a username">
-  <input type="password" id="signup-password" placeholder="Choose a password">
-  <button onclick="signup()">Sign Up</button>
+  <!-- Sign Up Form -->
+  <div>
+    <h2>Sign Up</h2>
+    <input type="text" id="signup-username" placeholder="Username">
+    <input type="password" id="signup-password" placeholder="Password">
+    <button onclick="signup()">Sign Up</button>
+  </div>
 
-  <h2>Login</h2>
-  <input id="login-username" placeholder="Enter your username">
-  <input type="password" id="login-password" placeholder="Enter your password">
-  <button onclick="login()">Login</button>
+  <hr>
 
-  <script src="login.js"></script>
+  <!-- Login Form -->
+  <div>
+    <h2>Login</h2>
+    <input type="text" id="login-username" placeholder="Username">
+    <input type="password" id="login-password" placeholder="Password">
+    <button onclick="login()">Login</button>
+  </div>
 </body>
 </html>
