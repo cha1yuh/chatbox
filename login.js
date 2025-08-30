@@ -10,7 +10,7 @@ firebase.initializeApp({
 
 const db = firebase.firestore();
 
-// Simple hash function for demonstration (not secure for production)
+// Simple hash function for passwords (for demonstration)
 function hash(str) {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
@@ -26,7 +26,7 @@ function signup() {
   const password = document.getElementById('signup-password').value;
 
   if (!username || !password) {
-    alert("Please enter a username and password!");
+    alert("Enter a username and password!");
     return;
   }
 
@@ -36,14 +36,19 @@ function signup() {
   }
 
   const hashedPassword = hash(password);
+  const userRef = db.collection('users').doc(username);
 
-  db.collection('users').doc(username).get().then(doc => {
+  userRef.get().then(doc => {
     if(doc.exists) {
       alert("Username already taken!");
     } else {
-      db.collection('users').doc(username).set({ password: hashedPassword });
-      sessionStorage.setItem('nickname', username);
-      window.location.href = 'index.html';
+      userRef.set({ password: hashedPassword })
+        .then(() => {
+          sessionStorage.setItem('nickname', username);
+          localStorage.setItem('nickname', username);
+          window.location.href = 'index.html';
+        })
+        .catch(err => console.error("Error creating user:", err));
     }
   });
 }
@@ -54,16 +59,18 @@ function login() {
   const password = document.getElementById('login-password').value;
 
   if(!username || !password) {
-    alert("Please enter username and password!");
+    alert("Enter username and password!");
     return;
   }
 
   const hashedPassword = hash(password);
+  const userRef = db.collection('users').doc(username);
 
-  db.collection('users').doc(username).get().then(doc => {
+userRef.get().then(doc => {
     if(doc.exists) {
       if(doc.data().password === hashedPassword) {
-sessionStorage.setItem('nickname', username);
+        sessionStorage.setItem('nickname', username);
+        localStorage.setItem('nickname', username);
         window.location.href = 'index.html';
       } else {
         alert("Incorrect password!");
@@ -71,5 +78,5 @@ sessionStorage.setItem('nickname', username);
     } else {
       alert("Username not found!");
     }
-  });
+  }).catch(err => console.error("Error logging in:", err));
 }
