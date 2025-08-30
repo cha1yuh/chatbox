@@ -1,17 +1,18 @@
-// Firebase initialization
+// Initialize Firebase (your real project config)
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCqILLxx2JAxstJ9LRIiqgFDWUTvAx4ZVs",
+  authDomain: "chatbox-3c95d.firebaseapp.com",
+  projectId: "chatbox-3c95d",
+  storageBucket: "chatbox-3c95d.firebasestorage.app",
+  messagingSenderId: "385714577506",
+  appId: "1:385714577506:web:9308dc98ed8de92d00713b"
 };
 
+// Initialize compat Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// Send message function
+// Send message
 function sendMessage() {
   const msg = document.getElementById("message").value;
   const nick = document.getElementById("nickname").value || "Anonymous";
@@ -27,7 +28,7 @@ function sendMessage() {
   document.getElementById("message").value = "";
 }
 
-// Real-time listener
+// Real-time listener for messages
 db.collection("messages")
   .orderBy("timestamp")
   .onSnapshot(snapshot => {
@@ -37,4 +38,6 @@ db.collection("messages")
       const data = doc.data();
       chatbox.innerHTML += `<p><strong>${data.nickname}:</strong> ${data.text}</p>`;
     });
+    // Scroll to the bottom automatically
+    chatbox.scrollTop = chatbox.scrollHeight;
   });
