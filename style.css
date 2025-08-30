@@ -1,18 +1,46 @@
-body { 
-  font-family: Arial; 
-  text-align: center; 
+/* --- General page styling --- */
+body {
+  background-color: #000;   /* black background */
+  color: #fff;              /* white text */
+  font-family: 'Arial', sans-serif; /* clean sans-serif font */
+  margin: 0;
+  padding: 20px;
 }
 
-#chatbox { 
-  border: 1px solid #ccc; 
-  height: 300px; 
-  width: 80%; 
-  margin: 10px auto; 
-  overflow-y: scroll; 
-  padding: 10px; 
+/* --- Header styling --- */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-input { 
-  margin: 5px; 
-  padding: 5px; 
+/* --- Chat box styling --- */
+#chatbox {
+  border: 1px solid #fff;   /* white border */
+  padding: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: #111;   /* slightly lighter black for contrast */
+  margin-bottom: 15px;
+}
+
+/* --- Input fields and buttons --- */
+input, button {
+  background-color: #222;   /* dark input fields */
+  color: #fff;              /* white text */
+  border: 1px solid #fff;
+  padding: 8px 10px;
+  margin: 5px 0;
+  border-radius: 3px;
+}
+
+/* --- Send button hover effect --- */
+button:hover {
+  background-color: #333;
+  cursor: pointer;
+}
+
+/* --- Make inputs stretch full width --- */
+#nickname, #message {
+  width: calc(100% - 22px); /* adjust for padding/border */
+  box-sizing: border-box;
 }
