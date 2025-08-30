@@ -1,27 +1,81 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Global Anonymous Chat</title>
+  <title>Wyrdbox Chat</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- Firebase scripts (compat mode) -->
+  <!-- Firebase scripts -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
-  <h1>cool space 1</h1>
+  <h1>Wyrdbox Chat</h1>
 
-  <!-- Nickname input -->
-  <input id="nickname" placeholder="Your nickname (optional)">
-
-  <!-- Message input -->
+  <input id="nickname" disabled>
   <input id="message" placeholder="Type a message">
   <button onclick="sendMessage()">Send</button>
 
-  <!-- Chat display -->
-  <div id="chatbox" style="border:1px solid #ccc; padding:10px; width:300px; height:400px; overflow-y:scroll;"></div>
+  <div id="chatbox"></div>
 
-  <!-- Link to your JS file -->
-  <script src="app.js"></script>
+  <script>
+    // --- Firebase setup ---
+    firebase.initializeApp({
+      apiKey: "YOUR_API_KEY",
+      authDomain: "chatbox-3c95d.firebaseapp.com",
+      projectId: "chatbox-3c95d",
+      storageBucket: "chatbox-3c95d.appspot.com",
+      messagingSenderId: "385714577506",
+      appId: "1:385714577506:web:9308dc98ed8de92d00713b"
+    });
+
+    const db = firebase.firestore();
+
+    // --- Determine user ---
+    let nickname = sessionStorage.getItem('nickname');
+    if(!nickname) {
+      // Not logged in / anonymous session not set
+      window.location.href = 'welcome.html';
+    }
+    document.getElementById('nickname').value = nickname;
+
+    // --- Daily reset GMT-6 ---
+    const now = new Date();
+    const nowGMT6 = new Date(now.getTime() - (6 * 60 + now.getTimezoneOffset()) * 60000);
+    const todayKey = nowGMT6.toISOString().split('T')[0];
+
+    const lastReset = localStorage.getItem('lastReset');
+    if(lastReset !== todayKey) {
+      db.collection("messages").get().then(snapshot => {
+        snapshot.forEach(doc => db.collection("messages").doc(doc.id).delete());
+      });
+      localStorage.setItem('lastReset', todayKey);
+    }
+
+    // --- Send message ---
+    function sendMessage() {
+      const msg = document.getElementById('message').value;
+      if(msg.trim() === "") return;
+
+    db.collection("messages").add({
+        nickname: nickname,
+        text: msg,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      document.getElementById('message').value = "";
+    }
+
+    // --- Display messages ---
+    db.collection("messages").orderBy("timestamp")
+      .onSnapshot(snapshot => {
+        const chatbox = document.getElementById("chatbox");
+        chatbox.innerHTML = "";
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          chatbox.innerHTML += `<p><strong>${data.nickname}:</strong> ${data.text}</p>`;
+        });
+        chatbox.scrollTop = chatbox.scrollHeight; // scroll to latest
+      });
+  </script>
 </body>
 </html>
