@@ -1,40 +1,37 @@
-/* Lemon Milk font */
+/* Import Lemon Milk font */
 @import url('https://fonts.cdnfonts.com/css/lemonmilk');
 
 /* Global Body */
 body {
-  font-family: 'Lemon/Milk', sans-serif;
-  background-color: #0d0d0d;
-  background-image: 
-    repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 1px, transparent 2px),
-    repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 1px, transparent 2px);
-  background-size: 40px 40px;
-  color: #f8f0c6; /* soft antique yellow for traditional feel */
+  font-family: 'Lemon/Milk';
+  font-weight: 400;
   margin: 0;
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #111;
+  color: #f8f0c6;
+  height: 100vh;
+  width: 100vw;
+  background-image: url('https://www.transparenttextures.com/patterns/black-linen.png');
+  background-size: cover;
+  background-repeat: repeat;
 }
 
-/* Header / Titles */
+/* Titles */
 h1, h2 {
   text-align: center;
   margin-bottom: 20px;
   color: #f8f0c6;
-  text-shadow: 2px 2px 0 #000;
+  text-shadow: 1px 1px 0 #000;
+  font-weight: 700; /* Bold titles */
+  font-family: 'Lemon/Milk';
 }
 
-/* Chat Title */
-h1.chat-title {
-  font-size: 3rem;
-  letter-spacing: 2px;
-  font-weight: bold;
-  margin-bottom: 30px;
-}
-
-/* Chatbox */
+/* Chatbox Container */
 #chatbox {
+  position: relative;
   width: 90%;
   max-width: 600px;
   height: 400px;
@@ -43,9 +40,13 @@ h1.chat-title {
   background-color: rgba(20,20,20,0.95);
   border: 2px solid #3a3a3a;
   border-radius: 12px;
-  box-shadow: inset 0 0 20px rgba(255,255,255,0.05);
   margin-bottom: 20px;
   scroll-behavior: smooth;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial;
+  font-weight: 300; /* Thin text for messages */
 }
 
 /* Messages */
@@ -53,25 +54,28 @@ h1.chat-title {
   margin: 6px 0;
   padding: 6px 10px;
   border-radius: 6px;
-  background-color: rgba(34, 34, 34, 0.8);
+  background-color: rgba(34, 34, 34, 0.85);
   font-size: 16px;
   text-shadow: 1px 1px 0 #000;
+  word-wrap: break-word;
+  font-family: Arial;
+  font-weight: 300; /* Thin message text */
 }
 
 /* Inputs & Buttons */
 input, button {
   width: 90%;
   max-width: 500px;
-  padding: 10px;
+  padding: 12px;
   margin: 6px 0;
   border-radius: 6px;
   border: 2px solid #3a3a3a;
   background-color: rgba(34,34,34,0.9);
   color: #f8f0c6;
   font-size: 16px;
-  text-shadow: 1px 1px 0 #000;
+  font-family: Arial;
+  font-weight: 300; /* Thin input text */
   box-sizing: border-box;
-  font-family: 'Lemon/Milk', sans-serif;
 }
 
 /* Buttons hover */
@@ -83,7 +87,8 @@ button:hover {
 
 /* Nickname input */
 #nickname {
-  font-weight: bold;
+  font-family: Arial;
+  font-weight: 300; /* Thin nickname text */
   text-align: center;
   background-color: rgba(30,30,30,0.9);
 }
@@ -92,22 +97,12 @@ button:hover {
 #chatbox::-webkit-scrollbar {
   width: 10px;
 }
+
 #chatbox::-webkit-scrollbar-thumb {
   background-color: rgba(248,240,198,0.4);
   border-radius: 10px;
 }
+
 #chatbox::-webkit-scrollbar-thumb:hover {
   background-color: rgba(248,240,198,0.6);
-}
-
-/* Maximalist touch: faint additional line overlays on chatbox */
-#chatbox::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image: repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 3px),
-                    repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 1px, transparent 3px);
-  pointer-events: none;
-  border-radius: 12px;
 }
