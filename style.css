@@ -1,135 +1,41 @@
-@import url('https://fonts.cdnfonts.com/css/wasted-vindey');
-
 body {
-  font-family: 'Wasted Vindey';
-  font-weight: 400;
+  background-color: #000;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 20px;
-  background-color: #111;
-  color: #f8f0c6;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-image: url('https://www.transparenttextures.com/patterns/black-linen.png');
 }
 
-h1 {
+h1, h2 {
   text-align: center;
   margin-bottom: 20px;
-  text-shadow: 1px 1px 0 #000;
-}
-
-/* Layout */
-#chat-container {
-  display: flex;
-  width: 90%;
-  max-width: 1000px;
-  flex: 1;
-  gap: 15px;
-}
-
-/* Chat Section */
-#chat-section {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-}
-
-#nickname {
-  margin-bottom: 10px;
-  padding: 10px;
-  background: rgba(30,30,30,0.9);
-  border: 2px solid #3a3a3a;
-  border-radius: 6px;
-  color: #f8f0c6;
-  text-align: center;
 }
 
 #chatbox {
-  flex: 1;
-  padding: 15px;
-  background: rgba(20,20,20,0.95);
-  border: 2px solid #3a3a3a;
-  border-radius: 12px;
+  border: 1px solid #fff;
+  padding: 10px;
+  height: 400px;
   overflow-y: auto;
-  font-family: Arial, sans-serif;
-  font-weight: 300;
+  background-color: #111;
+  margin-bottom: 15px;
+  scroll-behavior: smooth;
 }
 
-#chatbox p {
-  margin: 6px 0;
-  padding: 6px 10px;
-  border-radius: 6px;
-  background: rgba(34,34,34,0.85);
-  font-size: 16px;
-}
-
-/* Input row */
-#input-row {
-  display: flex;
-  margin-top: 10px;
-}
-
-#message {
-  flex: 1;
-  padding: 12px;
-  border: 2px solid #3a3a3a;
-  border-right: none;
-  background: rgba(34,34,34,0.9);
-  color: #f8f0c6;
-  border-radius: 6px 0 0 6px;
-}
-
-button {
-  width: 90px;
-  border: 2px solid #3a3a3a;
-  background: rgba(34,34,34,0.9);
-  color: #f8f0c6;
-  border-radius: 0 6px 6px 0;
-  cursor: pointer;
+input, button {
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 8px 10px;
+  margin: 5px 0;
+  border-radius: 3px;
 }
 
 button:hover {
-  background: rgba(50,50,50,0.95);
-  box-shadow: 0 0 10px rgba(248,240,198,0.2);
-}
-
-/* User Section */
-#user-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: rgba(20,20,20,0.95);
-  border: 2px solid #3a3a3a;
-  border-radius: 12px;
-  padding: 10px;
-  overflow-y: auto;
-}
-#userSearch {
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 2px solid #3a3a3a;
-  border-radius: 6px;
-  background: rgba(34,34,34,0.9);
-  color: #f8f0c6;
-}
-
-#userList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#userList li {
-  padding: 8px;
-  border-radius: 6px;
-  margin-bottom: 6px;
+  background-color: #333;
   cursor: pointer;
-  background: rgba(34,34,34,0.8);
 }
 
-#userList li:hover {
-  background: rgba(50,50,50,0.9);
+#nickname, #message, #signup-username, #login-username {
+  width: calc(100% - 22px);
+  box-sizing: border-box;
 }
