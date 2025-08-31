@@ -1,116 +1,135 @@
-/* Import Wasted Vindey font (or Olivera as alternative) */
-@import url('https://fonts.cdnfonts.com/css/wasted-vindey'); /* change to Olivera if desired */
+@import url('https://fonts.cdnfonts.com/css/wasted-vindey');
 
-/* Global Body */
 body {
   font-family: 'Wasted Vindey';
   font-weight: 400;
   margin: 0;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   background-color: #111;
   color: #f8f0c6;
   height: 100vh;
   width: 100vw;
-  background-image: url('https://www.transparenttextures.com/patterns/black-linen.png');
-  background-size: cover;
-  background-repeat: repeat;
-}
-
-/* Titles */
-h1, h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #f8f0c6;
-  text-shadow: 1px 1px 0 #000;
-  font-weight: 700;
-  font-family: 'Wasted Vindey';
-}
-
-/* Chatbox Container */
-#chatbox {
-  position: relative;
-  width: 90%;
-  max-width: 600px;
-  height: 400px;
-  padding: 15px;
-  overflow-y: auto;
-  background-color: rgba(20,20,20,0.95);
-  border: 2px solid #3a3a3a;
-  border-radius: 12px;
-  margin-bottom: 20px; /* Extra space below chatbox */
-  scroll-behavior: smooth;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  font-family: Arial;
+  align-items: center;
+  background-image: url('https://www.transparenttextures.com/patterns/black-linen.png');
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 0 #000;
+}
+
+/* Layout */
+#chat-container {
+  display: flex;
+  width: 90%;
+  max-width: 1000px;
+  flex: 1;
+  gap: 15px;
+}
+
+/* Chat Section */
+#chat-section {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+#nickname {
+  margin-bottom: 10px;
+  padding: 10px;
+  background: rgba(30,30,30,0.9);
+  border: 2px solid #3a3a3a;
+  border-radius: 6px;
+  color: #f8f0c6;
+  text-align: center;
+}
+
+#chatbox {
+  flex: 1;
+  padding: 15px;
+  background: rgba(20,20,20,0.95);
+  border: 2px solid #3a3a3a;
+  border-radius: 12px;
+  overflow-y: auto;
+  font-family: Arial, sans-serif;
   font-weight: 300;
 }
 
-/* Messages */
 #chatbox p {
   margin: 6px 0;
   padding: 6px 10px;
   border-radius: 6px;
-  background-color: rgba(34, 34, 34, 0.85);
+  background: rgba(34,34,34,0.85);
   font-size: 16px;
-  text-shadow: 1px 1px 0 #000;
-  word-wrap: break-word;
-  font-family: Arial;
-  font-weight: 300;
 }
 
-/* Inputs & Buttons */
-input, button {
-  width: 90%;
-  max-width: 500px;
+/* Input row */
+#input-row {
+  display: flex;
+  margin-top: 10px;
+}
+
+#message {
+  flex: 1;
   padding: 12px;
-  margin: 10px 0; /* increased spacing */
-  border-radius: 6px;
   border: 2px solid #3a3a3a;
-  background-color: rgba(34,34,34,0.9);
+  border-right: none;
+  background: rgba(34,34,34,0.9);
   color: #f8f0c6;
-  font-size: 16px;
-  font-family: Arial;
-  font-weight: 300;
-  box-sizing: border-box;
-  display: block; /* ensures proper alignment with text */
+  border-radius: 6px 0 0 6px;
 }
 
-/* Make inputs align properly with labels/text in login.html */
-div input {
-  margin-top: 6px;
-  margin-bottom: 12px;
-}
-
-/* Buttons hover */
-button:hover {
-  background-color: rgba(50,50,50,0.95);
-  box-shadow: 0 0 10px rgba(248,240,198,0.2);
+button {
+  width: 90px;
+  border: 2px solid #3a3a3a;
+  background: rgba(34,34,34,0.9);
+  color: #f8f0c6;
+  border-radius: 0 6px 6px 0;
   cursor: pointer;
 }
 
-/* Nickname input */
-#nickname {
-  font-family: Arial;
-  font-weight: 300;
-  text-align: center;
-  background-color: rgba(30,30,30,0.9);
-  margin-bottom: 15px; /* space between nickname and message input */
+button:hover {
+  background: rgba(50,50,50,0.95);
+  box-shadow: 0 0 10px rgba(248,240,198,0.2);
 }
 
-/* Scrollbar */
-#chatbox::-webkit-scrollbar {
-  width: 10px;
+/* User Section */
+#user-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: rgba(20,20,20,0.95);
+  border: 2px solid #3a3a3a;
+  border-radius: 12px;
+  padding: 10px;
+  overflow-y: auto;
+}
+#userSearch {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid #3a3a3a;
+  border-radius: 6px;
+  background: rgba(34,34,34,0.9);
+  color: #f8f0c6;
 }
 
-#chatbox::-webkit-scrollbar-thumb {
-  background-color: rgba(248,240,198,0.4);
-  border-radius: 10px;
+#userList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-#chatbox::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(248,240,198,0.6);
+#userList li {
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  background: rgba(34,34,34,0.8);
+}
+
+#userList li:hover {
+  background: rgba(50,50,50,0.9);
 }
