@@ -10,24 +10,11 @@
 <body>
   <h1>Wyrdbox Chat</h1>
 
-  <div id="chat-container">
-    <!-- Left: Chat window -->
-    <div id="chat-section">
-      <input id="nickname" disabled>
-      <div id="chatbox"></div>
+  <input id="nickname" disabled>
+  <input id="message" placeholder="Type a message">
+  <button onclick="sendMessage()">Send</button>
 
-      <div id="input-row">
-        <input id="message" placeholder="Type a message">
-        <button onclick="sendMessage()">Send</button>
-      </div>
-    </div>
-
-    <!-- Right: User list -->
-    <div id="user-section">
-      <input id="userSearch" placeholder="Search users...">
-      <ul id="userList"></ul>
-    </div>
-  </div>
+  <div id="chatbox"></div>
 
   <script>
     // Firebase setup
@@ -44,18 +31,16 @@
 
     // Determine user
     let nickname = sessionStorage.getItem('nickname');
-    if (!nickname) window.location.href = 'welcome.html';
+    if(!nickname) window.location.href = 'welcome.html';
     document.getElementById('nickname').value = nickname;
 
-    // Current chat mode (global or DM with someone)
-    let currentChat = { type: "global", user: null };
-
-    // Daily GMT-6 reset for global chat only
+    // Daily GMT-6 reset
     const now = new Date();
     const nowGMT6 = new Date(now.getTime() - (6 * 60 + now.getTimezoneOffset()) * 60000);
     const todayKey = nowGMT6.toISOString().split('T')[0];
+
     const lastReset = localStorage.getItem('lastReset');
-    if (lastReset !== todayKey) {
+    if(lastReset !== todayKey) {
       db.collection("messages").get().then(snapshot => {
         snapshot.forEach(doc => db.collection("messages").doc(doc.id).delete());
       });
@@ -65,86 +50,28 @@
     // Send message
     function sendMessage() {
       const msg = document.getElementById('message').value;
-      if (msg.trim() === "") return;
+      if(msg.trim() === "") return;
 
-    if (currentChat.type === "global") {
-        db.collection("messages").add({
-          nickname: nickname,
-          text: msg,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-      } else {
-        const chatId = [nickname, currentChat.user].sort().join("_");
-        db.collection("dms").doc(chatId).collection("messages").add({
-          from: nickname,
-          to: currentChat.user,
-          text: msg,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-      }
+      db.collection("messages").add({
+        nickname: nickname,
+        text: msg,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
 
       document.getElementById('message').value = "";
     }
 
-    // Display chat messages
-    function loadChat() {
-      const chatbox = document.getElementById("chatbox");
-      chatbox.innerHTML = "";
-
-      if (currentChat.unsubscribe) currentChat.unsubscribe();
-
-      if (currentChat.type === "global") {
-        currentChat.unsubscribe = db.collection("messages").orderBy("timestamp")
-          .onSnapshot(snapshot => {
-            chatbox.innerHTML = "";
-            snapshot.forEach(doc => {
-              const data = doc.data();
-              chatbox.innerHTML += `<p><strong>${data.nickname}:</strong> ${data.text}</p>`;
-            });
-            chatbox.scrollTop = chatbox.scrollHeight;
-          });
-      } else {
-        const chatId = [nickname, currentChat.user].sort().join("_");
-        currentChat.unsubscribe = db.collection("dms").doc(chatId).collection("messages").orderBy("timestamp")
-          .onSnapshot(snapshot => {
-            chatbox.innerHTML = "";
-            snapshot.forEach(doc => {
-              const data = doc.data();
-              chatbox.innerHTML += `<p><strong>${data.from}:</strong> ${data.text}</p>`;
-            });
-            chatbox.scrollTop = chatbox.scrollHeight;
-          });
-      }
-    }
-
-    loadChat();
-
-    // Registered users (simple: anyone who signed up gets stored in "users")
-    db.collection("users").onSnapshot(snapshot => {
-      const userList = document.getElementById("userList");
-      const search = document.getElementById("userSearch").value.toLowerCase();
-      userList.innerHTML = "";
-      snapshot.forEach(doc => {
-        const user = doc.data().nickname;
-        if (user !== nickname && user.toLowerCase().includes(search)) {
-          const li = document.createElement("li");
-          li.textContent = user;
-          li.onclick = () => {
-            currentChat = { type: "dm", user: user };
-            loadChat();
-          };
-          userList.appendChild(li);
-        }
+    // Display messages
+    db.collection("messages").orderBy("timestamp")
+      .onSnapshot(snapshot => {
+        const chatbox = document.getElementById("chatbox");
+        chatbox.innerHTML = "";
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          chatbox.innerHTML += `<p><strong>${data.nickname}:</strong> ${data.text}</p>`;
+        });
+        chatbox.scrollTop = chatbox.scrollHeight;
       });
-    });
-
-    // User search
-    document.getElementById("userSearch").addEventListener("input", () => {
-      db.collection("users").get().then(() => {}); // refresh by re-rendering
-    });
-
-    // Save self to "users" collection
-    db.collection("users").doc(nickname).set({ nickname: nickname }, { merge: true });
   </script>
 </body>
 </html>
