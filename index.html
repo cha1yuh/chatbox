@@ -63,15 +63,10 @@
 
     // Display messages
     db.collection("messages").orderBy("timestamp")
-      .onSnapshot(snapshot => {
-        const chatbox = document.getElementById("chatbox");
+      .onSnapshot(("chatbox");
         chatbox.innerHTML = "";
         snapshot.forEach(doc => {
           const data = doc.data();
           chatbox.innerHTML += `<p><strong>${data.nickname}:</strong> ${data.text}</p>`;
         });
-        chatbox.scrollTop = chatbox.scrollHeight;
-      });
-  </script>
-</body>
-</html>
+        chatbox.scrollTop = chatbox.scrollHeightj;
