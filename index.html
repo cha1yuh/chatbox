@@ -4,16 +4,21 @@
   <title>Wyrdbox Chat</title>
   <link rel="stylesheet" href="style.css">
 
+  <!-- Firebase scripts -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
   <h1>Wyrdbox Chat</h1>
 
+  <!-- Show current nickname -->
   <input id="nickname" disabled>
+
+  <!-- Message input -->
   <input id="message" placeholder="Type a message">
   <button onclick="sendMessage()">Send</button>
 
+  <!-- Chat messages -->
   <div id="chatbox"></div>
 
   <script>
@@ -29,28 +34,15 @@
 
     const db = firebase.firestore();
 
-    // Determine user
+    // Get nickname from session
     let nickname = sessionStorage.getItem('nickname');
-    if(!nickname) window.location.href = 'welcome.html';
+    if (!nickname) window.location.href = 'welcome.html';
     document.getElementById('nickname').value = nickname;
-
-    // Daily GMT-6 reset
-    const now = new Date();
-    const nowGMT6 = new Date(now.getTime() - (6 * 60 + now.getTimezoneOffset()) * 60000);
-    const todayKey = nowGMT6.toISOString().split('T')[0];
-
-    const lastReset = localStorage.getItem('lastReset');
-    if(lastReset !== todayKey) {
-      db.collection("messages").get().then(snapshot => {
-        snapshot.forEach(doc => db.collection("messages").doc(doc.id).delete());
-      });
-      localStorage.setItem('lastReset', todayKey);
-    }
 
     // Send message
     function sendMessage() {
       const msg = document.getElementById('message').value;
-      if(msg.trim() === "") return;
+      if (msg.trim() === "") return;
 
       db.collection("messages").add({
         nickname: nickname,
@@ -61,12 +53,18 @@
       document.getElementById('message').value = "";
     }
 
-    // Display messages
-    db.collection("messages").orderBy("timestamp")
-      .onSnapshot(("chatbox");
+    // Listen for messages
+    db.collection("messages")
+      .orderBy("timestamp")
+      .onSnapshot(snapshot => {
+        const chatbox = document.getElementById("chatbox");
         chatbox.innerHTML = "";
         snapshot.forEach(doc => {
           const data = doc.data();
           chatbox.innerHTML += `<p><strong>${data.nickname}:</strong> ${data.text}</p>`;
         });
-        chatbox.scrollTop = chatbox.scrollHeightj;
+        chatbox.scrollTop = chatbox.scrollHeight;
+      });
+  </script>
+</body>
+</html>
